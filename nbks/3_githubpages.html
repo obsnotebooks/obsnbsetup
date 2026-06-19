@@ -57,26 +57,18 @@
   </script>
   <script id="14" type="text/markdown">
     #### Setup GitHub Pages to build and deploy your site whenever you `push` new changes
-    1. Click this link to [a file that helps publish your site](https://github.com/framework-dev/useful_files/blob/main/publish.yml).
-    2. Click the ‘Download (icon)’ button to download the file and then move it into your project directory.
-    3. **TODO >>> this needs updating <<<** Now, from the Terminal command line, *in* your project directory, type these two commands:<br>&nbsp;`mkdir -p .github/workflows/`<br>&nbsp;`mv publish.yml .github/workflows/`<br>*These two commands do the following: 1) make a directory called* `workflows` *inside a (not-always-visible) directory called* `.github` *and 2) move the* `publish.yml` *file that you put into your project directory into the* `workflows` *folder.*
-    4. Then, `commit` and `push` these changes to GitHub with these commands:<br>&nbsp;`git add .`<br>&nbsp;`git commit -m "add publish workflow"`<br>&nbsp;`git push`<br>*NOTE ... that these are the three commands (ideally with a different* `-m "message"` *each time) that you will issue whenever you’ve made significant changes to files in your project folder and you want to push them to your GitHub repository where they will be published.*
-
-    You have added a `publish.yml` file to a special directory where GitHub will find it and use it to build a website once you have done a little more to set up GitHub Pages, as follows:
     1. Go to GitHub and open your project’s repository. Click the ‘Settings’ tab.
     2. Click the ‘Pages’ item from side bar on the left.
-    3. Under ‘Build and deployment’ change ‘Deploy from a branch’ to ‘GitHub Actions’.
+    3. Below where it says ‘Deploy from a branch’ choose the branch `main` (the default name for your repository’s initial branch).
 
-    You may see errors at this stage but don’t worry about them (yet). The next time you make a change to your project, the site will be built and deployed. And, if you go to the GitHub repo -> Settings -> Pages again, you will see the URL for your project’s site, ready to be accessed publicly on the web. The URL will be of the form:<br>&nbsp;`https://<your-user-name>.github.io/<repo-name>`.
-    <!-- - need to create or copy: `.github/workflows/publish.yml` into your project
-    - make sure workflows are triggered correctly -->
+    The site will be automatically built for you the next time you change the content of your repo and after you have `push`ed it to its `origin` that you have set up to be GitHub. The URL of the site will take this form:
+
+    `https://<YourUserName>.github.io/<RepoName>`
+
+    … and it becomes live or updates a minute or so after every `push`.
+  </script>
+  <script id="52" type="text/markdown">
     ---
-    <!--
-    git init
-    copy .github/workflows/publish.yml from an existing repo
-    git add *
-    git commit -m "first commit"
-    -->
   </script>
   <script id="51" type="module">
     // Add copy buttons to all code blocks

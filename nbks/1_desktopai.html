@@ -9,7 +9,7 @@
     ## Download and Install Observable Desktop
   </script>
   <script id="2" type="text/markdown">
-    If you use a **Mac** computer, then please dowload and use **Observable Desktop**.
+    If you use a **Mac** computer, then please download and use **Observable Desktop**.
 
     Go to https://observablehq.com/notebook-kit/desktop and then scroll down to the Download link. (If you have time and interest, watch the video.) Install the app.
   </script>
@@ -19,14 +19,34 @@
   <script id="4" type="text/markdown">
     To use **Observable Desktop** you will need a free Observable account. Go to [the Observable Desktop Guide](https://observablehq.com/notebook-kit/desktop-guide) to learn how to do this and also read through the guide for information about editing.
 
+    > 💡 **Tip:** When you create your Observable account you will receive a **verification email** — check your spam folder if it doesn't arrive within a minute or two. Once verified, make sure you **sign in to Observable Desktop** using the same account (look for the sign-in prompt when you first open the app).
+
     ---
   </script>
   <script id="24" type="text/markdown">
+    ## Adding an Anthropic → Claude API Key to Activate LLM Assistance
 
-    ## Adding an Anthropic &rightarrow; Claude API Key to Activate LLM Assistance
-    Within Observable Desktop – under `Help` – you will be able to access what is now the [Claude Platform](https://platform.claude.com/login) and set up a pay-as-you-go Claude account, add some credit to it and obtain an API key that you will then use to activate the AI assistant within the Desktop.
+    The AI assistant in Observable Desktop is powered by Claude (made by Anthropic). To use it you need to set up a separate **pay-as-you-go** Claude API account — this is different from a Claude.ai subscription. You are charged only for what you use (based on the amount of text sent back and forth), so there is no ongoing fee.
 
-    The minimum amount you can put in is $5 + tax = $5.35. I did this in August'25 and I still had $1.82 credit the following Febrauary. Although my usage was not been great, I didn’t hesitated to use the AI assitant and have done quite a lot with it.
+    **Step 1 — Create a Claude Platform account and add credit**
+
+    Go to the [Claude Platform](https://platform.claude.com/login) and sign up. Once logged in, navigate to **Billing** and add some credit. The minimum top-up is **$5** (plus any applicable tax — the exact total will depend on your location). I did this in August '24 and still had $1.82 credit the following February. Even with fairly regular use, it goes a long way.
+
+    **Step 2 — Generate an API key**
+
+    In the Claude Platform, go to **API Keys** (in the left-hand menu) and click **Create Key**. Give it a name (anything will do), then **copy the key** — you won't be able to see it again after you close that screen.
+
+    **Step 3 — Add the key to Observable Desktop**
+
+    Open Observable Desktop, then in the menu bar go to:
+
+    ```
+    Help  →  AI Settings
+    ```
+
+    Paste your API key into the field provided and click **Save**. The AI assistant (me!) will now be active in your notebooks.
+
+    > 💡 **Tip:** If you don't see `AI Settings` under `Help`, make sure you are running the latest version of Observable Desktop.
   </script>
   <script id="11" type="text/markdown">
     ---

@@ -4,7 +4,7 @@
   <script id="1" type="text/markdown">
     # *Setting up*<br>GitHub &amp; GitHub Pages
 
-    *more setup, but most of it you only need to do once and this will allow you*<br>***to turn your local notebook-developed projects into internet-accessible websites***
+    *more setup, but most of it you only need to do once and this will allow you to*<br>***turn your local notebook-developed projects into internet-accessible websites***
 
     ---
   </script>
@@ -42,7 +42,13 @@
     2. Click ‘New Repository’ (usually on the upper right; you may have to click the `Repositories` tab).
     3. Choose an unused name for the repo and then scroll down to make sure the `Visibility` of the repo is `public`. Also make sure that GitHub will *not* be adding `README, .gitignore, or license`.
     4. Click ‘Create Repository’ (lower right).
-    5. GitHub provides the next commands you need to type into your Terminal command line. Scroll down, if necessary, to:<br>‘...or push an existing repository from the command line’<br>and use the ‘copy’ button (on the right) to copy the three commands. Then go back to your Terminal command line and simply `paste` in these commands, hitting return once you’ve done so.
+    5. GitHub provides the next commands you need to type into your Terminal command line. Scroll down, if necessary, to:<br>‘**...or push an existing repository from the command line***’<br>and use the ‘copy’ button (on the right) to copy the three commands. They will look like this, but with your details.
+    ```
+    git remote add origin https://github.com/<yourGitHubID>/<yourRepoName>.git
+    git branch -M main
+    git push -u origin main
+    ```
+    6. Then go back to your Terminal command line *inside your project folder* and simply `paste` in the commands, hitting return once you’ve done so.
 
     Now your local repository is set up to ‘track’ the repo on GitHub and whenever you `commit` and `push` work that you have done locally, it will be sent to GitHub (where you can share the work and collaborate). The final step is to use GitHub Pages to automatically build you an updated website whenever you `push` changes.
     <!-- - need to create or copy: `.github/workflows/publish.yml` into your project
@@ -57,11 +63,24 @@
   </script>
   <script id="14" type="text/markdown">
     #### Setup GitHub Pages to build and deploy your site whenever you `push` new changes
+
+    Before you take these staps you must `build` the web site version of your project, locally. In a Terminal window and within your project folder, type:
+    ```
+    npm run build
+    ```
+    Then `commit` and `push` these changes (the `build`) to GitHub:
+    ```
+    git add .
+    git commit -m "first site"
+    git push
+    ```
+    Now take the following steps.
+
     1. Go to GitHub and open your project’s repository. Click the ‘Settings’ tab.
     2. Click the ‘Pages’ item from side bar on the left.
     3. Below where it says ‘Deploy from a branch’ choose the branch `main` (the default name for your repository’s initial branch).
 
-    The site will be automatically built for you the next time you change the content of your repo and after you have `push`ed it to its `origin` that you have set up to be GitHub. The URL of the site will take this form:
+    The site will be automatically built for you the **next time** you change the content of your repo and after you have `push`ed a new `commit` to its `origin` that you have set up to be GitHub. The URL of the site will take this form:
 
     `https://<YourUserName>.github.io/<RepoName>`
 

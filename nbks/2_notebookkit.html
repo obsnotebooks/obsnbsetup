@@ -11,46 +11,109 @@
   <script id="2" type="text/markdown">
     ## Create your First Project Folder and Set Up the Notebook Kit
 
-    The desktop app is a notebook editor that creates, edits and saves HTML files. (These files have .html as their extension but have a special format.)
+    The [**Observable Desktop app**](https://observablehq.com/desktop) is a notebook editor that creates, edits, and saves HTML files. (These files have `.html` as their extension but have a special format.) [Instructions for setting up the desktop app](1_desktopai.html) are another linked notebook of this site.
 
-    You will be editing these files inside folders that are organized to use the [**Observable Notebook Kit**](https://observablehq.com/notebook-kit/kit). Once set up, the Kit allows you to turn your notebooks into a publishable web site that you can view locally at first and then publicly.
+    You will be editing these files inside folders that are organized to use the [**Observable Notebook Kit**](https://observablehq.com/notebook-kit/kit). Once set up, the Kit allows you to turn your notebooks into a publishable website that you can view locally at first, and then share publicly.
   </script>
   <script id="4" type="text/markdown">
-    For installations and configurations, you are going to need a plain text editor. If you know what I’m talking about and if you have one, fine. If not, and you are using a Mac, download and install [CotEditor](https://coteditor.com/). If you’re on a PC, I’m afraid I leave you to your own devices.
+    ### Before you begin: get a plain text editor
+
+    For some of the steps below you will need a **plain text editor** — this is different from a word processor like Word. If you already have one you like, use it. Otherwise:
+
+    - **Mac:** Download and install [CotEditor](https://coteditor.com/) — it's free and simple.
+    - **PC:** Download and install [Notepad++](https://notepad-plus-plus.org/) — also free and widely used.
   </script>
   <script id="3" type="text/markdown">
-    1. In whatever way is most comfortable for you (and best organized) create a folder called something appropriate like: **`ObservableNotebooks`**. <!-- (Note: You will move/upload this folder to your shared-with-the Google Drive folder early in the semester.) -->
-    2. Inside this folder make another folder called **`nbks`**. This is where you will create and store your notebook files.
-    3. Open the Observable Desktop app and then edit the `Untitled` default document that appears. Edit the title and create a few more MarkDown, `md`, cells with some text in them.
-    4. Select `File —> Save As...` to save what you’ve done, using the name **`index.html`**, inside the **`nbks`** folder of your project folder. This `index.html` file is special and we’ll explain why later.
-    5. Now use your Terminal program and its Command Line Interface (CLI) to navigate to your `ObservableNotebooks` project folder. If you haven't done this before, we’ll do this together in workshop, and/or *ask questions*.
-    6. Now, if you’ve never done so before, you will need to install **`node.js`** via a *package manager* called `npm` (Node Package Manager). Go to step 8 if you already have `npm` installed, otherwise:
-    7. Download the installer for `node.js` that is best for your computer. If you have a Mac [download from here](https://nodejs.org/en/download). Follow instructions for installation. Verify the installation with commands that show the installed versions of these packages. At the terminal, type, on separate lines:
-    ````
-    node -v
-    npm -v
-    ````
-    8. Next, at the Terminal, type:
-    ````
-    npm add @observablehq/notebook-kit
-    ````
-    9. Now open up your plain text editor (see above). Find and edit the file **`package.json`** which has been created by the previous step inside your `ObservableNotebooks` folder. You can just replace the entire contents of the file with the following (it’s the `scripts` part that needs adding):
-    ````json
-    {
-      "dependencies": {
-        "@observablehq/notebook-kit": "^2.1.5"
-      },
-      "scripts": {
-        "preview": "notebooks preview --root nbks",
-        "build": "notebooks build --root nbks --out ../docs -- *.html"
-      }
-    }
-    ````
-    10. Finally, for now, in your terminal, type:
-    ````
-    npm run preview
-    ````
-    Then type `h` and hit return. **Read and explore what is displayed**.
+    ### Step-by-step setup
+
+    **1. Create your project folder structure**
+
+    In whatever way is most comfortable for you, create a folder called something like **`ObservableNotebooks`**. Inside it, create a subfolder called **`nbks`** — this is where your notebook files will live.
+
+    ---
+
+    **2. Install Node.js** *(skip to step 3 if you already have it)*
+
+    You need a tool called **Node.js** installed on your computer. It comes with a companion tool called `npm` (Node Package Manager) that we'll use in a moment.
+
+    - [Download the Node.js installer here](https://nodejs.org/en/download) and follow the installation instructions.
+
+    Once installed, **verify it worked** by opening your Terminal (see step 3 below for how to open it) and typing these two commands, one at a time, hitting Return after each:
+    > ```
+    > node -v
+    > npm -v
+    > ```
+    Each should print a version number (e.g. `v22.0.0`). If you see numbers, you're good.
+
+    ---
+
+    **3. Open your Terminal and navigate to your project folder**
+
+    The **Terminal** is a text-based way to give your computer instructions. Don't be intimidated — you only need a couple of commands.
+
+    - **Mac:** Open Spotlight (⌘ Space), type `Terminal`, and press Return.
+    - **PC:** Press the Windows key, type `PowerShell`, and press Return.
+
+    Once Terminal is open, you need to navigate *into* your `ObservableNotebooks` folder. The easiest way:
+
+    1. Type `cd ` (the letters c, d, and a space — don't press Return yet).
+    2. Drag your `ObservableNotebooks` folder from Finder/Explorer into the Terminal window. It will paste the full path for you.
+    3. Now press Return.
+
+    You are now "inside" your project folder. All the following commands should be run from here.
+
+    ---
+
+    **4. Install the Observable Notebook Kit**
+
+    In your Terminal, type:
+    > ```
+    > npm add @observablehq/notebook-kit
+    > ```
+    This will create two things inside your `ObservableNotebooks` folder: a file called `package.json` and a folder called `node_modules`.
+
+    ---
+
+    **5. Edit `package.json` to add build scripts**
+
+    Open `package.json` in your plain text editor (see above). It will already have a `dependencies` section written by the previous step — **don't change this line**. You just need to add a `scripts` section. The **entire file** should look like this but may have a different version number. The version shown here (`^2.1.5`) may be out of date:
+    > ```json
+    > {
+    >   "dependencies": {
+    >     "@observablehq/notebook-kit": "^2.1.5"
+    >   },
+    >   "scripts": {
+    >     "preview": "notebooks preview --root nbks",
+    >     "build": "notebooks build --root nbks --out ../docs -- *.html"
+    >   }
+    > }
+    > ```
+
+    > **Note on the `build` script:** The `--out ../docs` part puts the built website into a `docs` inside your project folder because its specification is relative to the `root` – your `nbks` folder – that you are specifying. `nbks` and `docs` will be at the same **level** inside your project folder.
+
+    Save the file.
+
+    ---
+
+    **6. Create your first notebook**
+
+    Open the **Observable Desktop app**. An `Untitled` document will appear. Edit the title and add a few **Markdown (`md`) cells** with some text.
+
+    Then select **`File → Save As...`** and save the file as **`index.html`** inside your **`nbks`** folder.
+
+    > **Why `index.html`?** This filename is special: it's the page that loads automatically when someone visits the root of your website (e.g. `yoursite.com/` rather than `yoursite.com/something.html`).
+
+    ---
+
+    **7. Launch the preview server**
+
+    Back in your Terminal, type:
+    > ```
+    > npm run preview
+    > ```
+    This starts a local web server so you can see your notebooks as a website in your browser. Once it's running, type `h` and press `Return` to see a list of keyboard shortcuts and options — take a moment to read through them. ... And then type `o` and `Return` to **see what happens!**
+
+    ---
   </script>
   <script id="5" type="module">
     // Add copy buttons to all code blocks

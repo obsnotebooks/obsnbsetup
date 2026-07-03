@@ -1,0 +1,112 @@
+<!doctype html>
+<notebook theme="air">
+  <title>Setting upObservable Notebook Kit</title>
+  <script id="1" type="text/markdown">
+    # *Setting up*<br>Observable Notebook Kit
+
+    *in order to develop notebooks into websites* ***locally***
+
+    ---
+  </script>
+  <script id="2" type="text/markdown">
+    ## Create your First Project Folder and Set Up the Notebook Kit
+
+    The desktop app is a notebook editor that creates, edits and saves HTML files. (These files have .html as their extension but have a special format.)
+
+    You will be editing these files inside folders that are organized to use the [**Observable Notebook Kit**](https://observablehq.com/notebook-kit/kit). Once set up, the Kit allows you to turn your notebooks into a publishable web site that you can view locally at first and then publicly.
+  </script>
+  <script id="4" type="text/markdown">
+    For installations and configurations, you are going to need a plain text editor. If you know what I’m talking about and if you have one, fine. If not, and you are using a Mac, download and install [CotEditor](https://coteditor.com/). If you’re on a PC, I’m afraid I leave you to your own devices.
+  </script>
+  <script id="3" type="text/markdown">
+    1. In whatever way is most comfortable for you (and best organized) create a folder called something appropriate like: **`ObservableNotebooks`**. <!-- (Note: You will move/upload this folder to your shared-with-the Google Drive folder early in the semester.) -->
+    2. Inside this folder make another folder called **`nbks`**. This is where you will create and store your notebook files.
+    3. Open the Observable Desktop app and then edit the `Untitled` default document that appears. Edit the title and create a few more MarkDown, `md`, cells with some text in them.
+    4. Select `File —> Save As...` to save what you’ve done, using the name **`index.html`**, inside the **`nbks`** folder of your project folder. This `index.html` file is special and we’ll explain why later.
+    5. Now use your Terminal program and its Command Line Interface (CLI) to navigate to your `ObservableNotebooks` project folder. If you haven't done this before, we’ll do this together in workshop, and/or *ask questions*.
+    6. Now, if you’ve never done so before, you will need to install **`node.js`** via a *package manager* called `npm` (Node Package Manager). Go to step 8 if you already have `npm` installed, otherwise:
+    7. Download the installer for `node.js` that is best for your computer. If you have a Mac [download from here](https://nodejs.org/en/download). Follow instructions for installation. Verify the installation with commands that show the installed versions of these packages. At the terminal, type, on separate lines:
+    ````
+    node -v
+    npm -v
+    ````
+    8. Next, at the Terminal, type:
+    ````
+    npm add @observablehq/notebook-kit
+    ````
+    9. Now open up your plain text editor (see above). Find and edit the file **`package.json`** which has been created by the previous step inside your `ObservableNotebooks` folder. You can just replace the entire contents of the file with the following (it’s the `scripts` part that needs adding):
+    ````json
+    {
+      "dependencies": {
+        "@observablehq/notebook-kit": "^2.1.5"
+      },
+      "scripts": {
+        "preview": "notebooks preview --root nbks",
+        "build": "notebooks build --root nbks --out ../docs -- *.html"
+      }
+    }
+    ````
+    10. Finally, for now, in your terminal, type:
+    ````
+    npm run preview
+    ````
+    Then type `h` and hit return. **Read and explore what is displayed**.
+  </script>
+  <script id="5" type="module">
+    // Add copy buttons to all code blocks
+    {
+      const style = html`<style>
+        pre {
+          position: relative;
+        }
+        .copy-btn {
+          position: absolute;
+          top: 6px;
+          right: 6px;
+          padding: 3px 10px;
+          font-size: 12px;
+          cursor: pointer;
+          background: #f0f0f0;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          opacity: 0.7;
+          transition: opacity 0.2s;
+        }
+        .copy-btn:hover { opacity: 1; }
+        .copy-btn.copied {
+          background: #d4edda;
+          border-color: #28a745;
+          color: #28a745;
+        }
+      </style>`;
+      document.head.append(style);
+
+      function addCopyButtons() {
+        document.querySelectorAll("pre").forEach((pre) => {
+          if (pre.querySelector(".copy-btn")) return; // skip if already added
+          const btn = document.createElement("button");
+          btn.className = "copy-btn";
+          btn.textContent = "Copy";
+          btn.addEventListener("click", () => {
+            const code = pre.querySelector("code")?.innerText ?? pre.innerText;
+            navigator.clipboard.writeText(code).then(() => {
+              btn.textContent = "Copied!";
+              btn.classList.add("copied");
+              setTimeout(() => {
+                btn.textContent = "Copy";
+                btn.classList.remove("copied");
+              }, 2000);
+            });
+          });
+          pre.append(btn);
+        });
+      }
+
+      // Run once and also observe for dynamically rendered cells
+      addCopyButtons();
+      const observer = new MutationObserver(addCopyButtons);
+      observer.observe(document.body, {childList: true, subtree: true});
+      invalidation.then(() => observer.disconnect());
+    }
+  </script>
+</notebook>

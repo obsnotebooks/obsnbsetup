@@ -9,26 +9,38 @@
     ---
   </script>
   <script id="12" type="text/markdown">
-    #### Install `git` • initialize a repository • make your first `commit`
-    1. From the `Terminal` command line, type:<br>&nbsp;`git version`<br>to check if it is already installed.
-    2. If you do *not* have **`git`** installed on your computer then go to [git-scm](https://git-scm.com/install/mac) and follow instructions to install it. (You may also have to install `homebrew`—this is all good and doesn’t take long.)
+    ## Install `git` • initialize a repository • make your first `commit`
+    1. From the `Terminal` command line, to check if it is already installed, type:
+    > ```
+    > git --version
+    > ```
+    2. If you do *not* have **`git`** installed on your computer then go to [git-scm](https://git-scm.com) and follow instructions to install it. (You may also have to install `homebrew` — this is all good and doesn’t take long.)
     3. In the `Terminal`, navigate to your project folder (the first one, probably named `ObservableNotebooks` or similar).
-    4. Once you are *in* the folder, type:<br>&nbsp;`git init`<br>This initiates a local *repository*.
+    4. Once you are *in* the folder, to **initiate** a local **repository**, type:
+    > ```
+    > git init
+    > ```
     5. For good housekeeping, you now need to make a `.gitignore` file in your project folder. This file begins with a full-stop and, once created, is invisible-by-default when using your Finder or file system. So, if you haven’t done this before, you may need help (or googling) to create it with a text editor. Anyway, its contents should be as follows:
-    ```
-        *.log
-        npm-debug.log*
-        yarn-debug.log*
-        yarn-error.log*
-        .DS_Store
-        /dist/
-        node_modules/
-    ```
-    6. Now you `add` all the files that git will track in your repository, using this command:<br>&nbsp;`git add .`<br>(That’s **space + full-stop** after `add`)
-    7. Finally, you commit all these changes to your local repository with:<br>&nbsp;`git commit -m "first commit"`<br>(This `-m` introduces a ‘message’ surrounded with quotes, with a brief comment on your `commit`.)
+    > ```
+    > *.log
+    > npm-debug.log*
+    > yarn-debug.log*
+    > yarn-error.log*
+    > .DS_Store
+    > /dist/
+    > node_modules/
+    > ```
+    6. Now you `add` all the files that git will track in your repository, using this command (That’s **space + full-stop** after `add`):
+    > ```
+    > git add .
+    > ```
+    7. Finally, you commit all these changes to your local repository with (This `-m` introduces a **message** surrounded with quotes, with a brief comment on your `commit`.):
+    > ```
+    > git commit -m "first commit"
+    > ```
+    ---
     <!-- - need to create or copy: `.github/workflows/publish.yml` into your project
     - make sure workflows are triggered correctly -->
-    ---
     <!--
     git init
     copy .github/workflows/publish.yml from an existing repo
@@ -37,20 +49,27 @@
     -->
   </script>
   <script id="13" type="text/markdown">
-    #### Create an `origin` repo(sitory) on GitHub • `push` your `first commit` to GitHub
-    1. If you don’t already have a GitHub account, create a free one on [GitHub.com](github.com).
-    2. Click ‘New Repository’ (usually on the upper right; you may have to click the `Repositories` tab).
-    3. Choose an unused name for the repo and then scroll down to make sure the `Visibility` of the repo is `public`. Also make sure that GitHub will *not* be adding `README, .gitignore, or license`.
-    4. Click ‘Create Repository’ (lower right).
-    5. GitHub provides the next commands you need to type into your Terminal command line. Scroll down, if necessary, to:<br>‘**...or push an existing repository from the command line***’<br>and use the ‘copy’ button (on the right) to copy the three commands. They will look like this, but with your details.
-    ```
-    git remote add origin https://github.com/<yourGitHubID>/<yourRepoName>.git
-    git branch -M main
-    git push -u origin main
-    ```
-    6. Then go back to your Terminal command line *inside your project folder* and simply `paste` in the commands, hitting return once you’ve done so.
+    ## Create an `origin` repo(sitory) on GitHub • `push` your first `commit` to GitHub
+    1. If you don't already have a GitHub account, create a free one on [GitHub.com](https://github.com).
+    2. Find and click **New Repository** (usually on the upper right; you may have to click the **Repositories** tab first).
+    3. Choose an unused name for the repo and then scroll down to make sure the **Visibility** of the repo is **public**.
+    4. Also make sure that GitHub will **not** be adding **README, .gitignore, or license**. These are separate toogle options.
+    5. Click **Create Repository** (lower right).
+    6. GitHub provides the next commands you need to type into your Terminal command line. Scroll down, if necessary, to:<br>'**...or push an existing repository from the command line***'<br>and use the 'copy' button (on the right) to copy the three commands. They will look like this, but with your details.
+    > ```
+    > git remote add origin https://github.com/<yourGitHubID>/<yourRepoName>.git
+    > git branch -M main
+    > git push -u origin main
+    > ```
+    7. Then go back to your Terminal command line **inside your project folder** and either **paste** at the command line prompt, hitting `Return` once you've done so (which runs all three commands at once) or **paste** into your plain text editor first and cut & paste each command in turn.
 
-    Now your local repository is set up to ‘track’ the repo on GitHub and whenever you `commit` and `push` work that you have done locally, it will be sent to GitHub (where you can share the work and collaborate). The final step is to use GitHub Pages to automatically build you an updated website whenever you `push` changes.
+    > **⚠️ Authentication:** The first time you `push`, GitHub will ask you to prove your identity. GitHub no longer accepts a simple password here. The easiest fix is to install the **[GitHub CLI](https://cli.github.com)** (`gh`) and then, in the Terminal, run:
+    > ```
+    > gh auth login
+    > ```
+    > It will walk you through the process step by step, opening a browser window to complete the login. Once done, future `push` commands will work without any further prompts.
+
+    Now your local repository is set up to 'track' the repo on GitHub and whenever you `commit` and `push` work that you have done locally, it will be sent to GitHub (where you can share the work and collaborate). The final step is to use GitHub Pages to automatically build you an updated website whenever you `push` changes.
     <!-- - need to create or copy: `.github/workflows/publish.yml` into your project
     - make sure workflows are triggered correctly -->
     ---
@@ -62,31 +81,32 @@
     -->
   </script>
   <script id="14" type="text/markdown">
-    #### Setup GitHub Pages to build and deploy your site whenever you `push` new changes
+    ## Setup GitHub Pages to build and deploy your site whenever you `push` new changes
 
-    Before you take these staps you must `build` the web site version of your project, locally. In a Terminal window and within your project folder, type:
-    ```
-    npm run build
-    ```
+    Before you take these steps you must `build` the web site version of your project, locally. In a Terminal window and within your project folder, type:
+    > ```
+    > npm run build
+    > ```
     Then `commit` and `push` these changes (the `build`) to GitHub:
-    ```
-    git add .
-    git commit -m "first site"
-    git push
-    ```
+    > ```
+    > git add .
+    > git commit -m "first site"
+    > git push
+    > ```
     Now take the following steps.
 
-    1. Go to GitHub and open your project’s repository. Click the ‘Settings’ tab.
-    2. Click the ‘Pages’ item from side bar on the left.
-    3. Below where it says ‘Deploy from a branch’ choose the branch `main` (the default name for your repository’s initial branch).
+    1. Go to GitHub and open your project's repository. Click the **Settings** tab.
+    2. Click the **Pages** item from the side bar on the left.
+    3. Below where it says **Deploy from a branch** choose the branch `main` (the default name for your repository's initial branch).
 
-    The site will be automatically built for you the **next time** you change the content of your repo and after you have `push`ed a new `commit` to its `origin` that you have set up to be GitHub. The URL of the site will take this form:
+    The site will go live at the URL below within a minute or two of each `push`. It takes this form:
 
     `https://<YourUserName>.github.io/<RepoName>`
 
-    … and it becomes live or updates a minute or so after every `push`.
-  </script>
-  <script id="52" type="text/markdown">
+    ---
+
+    > **📓 Coming up:** The workflow above requires you to manually run `npm run build` and commit the result every time you want to update your site — which is a few extra steps. There is a more elegant approach using **GitHub Actions**, which automates the build entirely: every time you `push` any change, GitHub rebuilds and redeploys the site for you automatically, with no extra commands needed. We will set this up later following instructions in a separate notebook.
+
     ---
   </script>
   <script id="51" type="module">

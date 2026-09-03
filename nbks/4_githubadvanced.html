@@ -1,59 +1,68 @@
 <!doctype html>
 <notebook theme="air">
-  <title>NOT YET READY FOR PUBLICATION!! Setting upGitHub &amp; GitHub Pages</title>
+  <title>Setting upMore Advanced GitHub &amp; GitHub Pages</title>
   <script id="1" type="text/markdown">
-    # NOT YET READY FOR PUBLICATION!!<br> *Setting up*<br>GitHub &amp; GitHub Pages
+    # *Setting up*<br>More Advanced GitHub &amp; GitHub Pages
 
-    *more setup, but most of it you only need to do once and this will allow you*<br>***to turn your local notebook-developed projects into internet-accessible websites***
+    - if you've made one, delete your `docs` folder
+    - change the build script in your `package.json` file to match this:
+    > ```json
+    > {
+    >   "dependencies": {
+    >     "@observablehq/notebook-kit": "^2.1.5"
+    >   },
+    >   "scripts": {
+    >     "preview": "notebooks preview --root nbks",
+    >     "build": "notebooks build --root nbks --out ../dist -- *.html"
+    >   }
+    > }
+    > ```
+    - copy this text and create a file containing it your text editor:
 
-    ---
-  </script>
-  <script id="12" type="text/markdown">
-    #### Install `git` • initialize a repository • make your first `commit`
-    1. From the `Terminal` command line, type:<br>&nbsp;`git version`<br>to check if it is already installed.
-    2. If you do *not* have **`git`** installed on your computer then go to [git-scm](https://git-scm.com/install/mac) and follow instructions to install it. (You may also have to install `homebrew`—this is all good and doesn’t take long.)
-    3. In the `Terminal`, navigate to your project folder (the first one, probably named `ObservableNotebooks` or similar).
-    4. Once you are *in* the folder, type:<br>&nbsp;`git init`<br>This initiates a local *repository*.
-    5. For good housekeeping, you now need to make a `.gitignore` file in your project folder. This file begins with a full-stop and, once created, is invisible-by-default when using your Finder or file system. So, if you haven’t done this before, you may need help (or googling) to create it with a text editor. Anyway, its contents should be as follows:
-    ```
-        *.log
-        npm-debug.log*
-        yarn-debug.log*
-        yarn-error.log*
-        .DS_Store
-        /dist/
-        node_modules/
-    ```
-    6. Now you `add` all the files that git will track in your repository, using this command:<br>&nbsp;`git add .`<br>(That’s **space + full-stop** after `add`)
-    7. Finally, you commit all these changes to your local repository with:<br>&nbsp;`git commit -m "first commit"`<br>(This `-m` introduces a ‘message’ surrounded with quotes, with a brief comment on your `commit`.)
-    <!-- - need to create or copy: `.github/workflows/publish.yml` into your project
-    - make sure workflows are triggered correctly -->
-    ---
-    <!--
-    git init
-    copy .github/workflows/publish.yml from an existing repo
-    git add *
-    git commit -m "first commit"
-    -->
-  </script>
-  <script id="13" type="text/markdown">
-    #### Create an `origin` repo(sitory) on GitHub • `push` your `first commit` to GitHub
-    1. If you don’t already have a GitHub account, create a free one on [GitHub.com](github.com).
-    2. Click ‘New Repository’ (usually on the upper right; you may have to click the `Repositories` tab).
-    3. Choose an unused name for the repo and then scroll down to make sure the `Visibility` of the repo is `public`. Also make sure that GitHub will *not* be adding `README, .gitignore, or license`.
-    4. Click ‘Create Repository’ (lower right).
-    5. GitHub provides the next commands you need to type into your Terminal command line. Scroll down, if necessary, to:<br>‘...or push an existing repository from the command line’<br>and use the ‘copy’ button (on the right) to copy the three commands. Then go back to your Terminal command line and simply `paste` in these commands, hitting return once you’ve done so.
+    > ```yaml
+    > name: Deploy
+    > on:
+    >   workflow_call: {}
+    >   workflow_dispatch: {}
+    >   push:
+    >     branches: [main]
+    >
+    > jobs:
+    >   deploy:
+    >     runs-on: ubuntu-latest
+    >     permissions:
+    >       pages: write
+    >       id-token: write
+    >     environment:
+    >       name: github-pages
+    >       url: \${{ steps.deployment.outputs.page_url }}
+    >     steps:
+    >       - uses: actions/checkout@v6
+    >       - uses: actions/setup-node@v6
+    >         with:
+    >           node-version: 24
+    >           cache: npm
+    >       - run: npm ci
+    >       - run: npm run build
+    >       - uses: actions/configure-pages@v6
+    >       - uses: actions/upload-pages-artifact@v5
+    >         with:
+    >           path: ./dist
+    >       - name: Deploy
+    >         id: deployment
+    >         uses: actions/deploy-pages@v5
+    > ```
+    
+    - save as `.github/workflows/deploy.yml` in your project folder (creating the folders as necessary)
+    > ```
+    > git add .
+    > git commit -m "add deploy workflow"
+    > git push
+    > ```
+    - go to GitHub and open your project’s repository. Click the ‘Settings’ tab.
+    
 
-    Now your local repository is set up to ‘track’ the repo on GitHub and whenever you `commit` and `push` work that you have done locally, it will be sent to GitHub (where you can share the work and collaborate). The final step is to use GitHub Pages to automatically build you an updated website whenever you `push` changes.
-    <!-- - need to create or copy: `.github/workflows/publish.yml` into your project
-    - make sure workflows are triggered correctly -->
-    ---
-    <!--
-    git init
-    copy .github/workflows/publish.yml from an existing repo
-    git add *
-    git commit -m "first commit"
-    -->
+
   </script>
   <script id="14" type="text/markdown">
     #### Setup GitHub Pages to build and deploy your site whenever you `push` new changes

@@ -1,11 +1,17 @@
 <!doctype html>
 <notebook theme="air">
-  <title>Setting upMore Advanced GitHub &amp; GitHub Pages</title>
+  <title>Setting upMore AdvancedGitHub &amp; GitHub Pages</title>
   <script id="1" type="text/markdown">
-    # *Setting up*<br>More Advanced GitHub &amp; GitHub Pages
+    # *Setting up*<br>More Advanced<br>GitHub &amp; GitHub Pages
 
-    - if you've made one, delete your `docs` folder
-    - change the build script in your `package.json` file to match this:
+    *the simple GitHub Pages setup works, but requires you to `build` and `push` a `docs` folder every time. Here we replace that with a* ***GitHub Actions workflow*** *that builds and deploys your site automatically on every `push`.*
+
+    ---
+  </script>
+  <script id="12" type="text/markdown">
+    ## Clean up • update your build script to output to `dist`
+    1. If you previously followed the simple GitHub Pages setup and committed a `docs` folder to your repository, delete it now. The new workflow builds the site itself and doesn't need a checked-in output folder.
+    2. Open `package.json` in your plain text editor and change the `build` script so it outputs to **`../dist`** instead of **`../docs`**. The whole file should look like this (your dependency version may differ):
     > ```json
     > {
     >   "dependencies": {
@@ -17,8 +23,14 @@
     >   }
     > }
     > ```
-    - copy this text and create a file containing it your text editor:
+    3. Save the file.
 
+    > **Why `dist` and not `docs`?** `dist` is a common convention for build output that gets *generated*, rather than hand-maintained and committed. Once GitHub Actions is building your site for you, there's no need to commit the built files at all — you'll add `/dist/` to your `.gitignore` (it's already there if you used the `.gitignore` from an earlier notebook).
+    ---
+  </script>
+  <script id="13" type="text/markdown">
+    ## Create the GitHub Actions workflow file
+    1. Copy the YAML below into your plain text editor:
     > ```yaml
     > name: Deploy
     > on:
@@ -52,75 +64,37 @@
     >         id: deployment
     >         uses: actions/deploy-pages@v5
     > ```
-    
-    - save as `.github/workflows/deploy.yml` in your project folder (creating the folders as necessary)
+    2. Inside your project folder, create a folder called **`.github`**, and inside *that* a folder called **`workflows`** (so the path is `.github/workflows`). Remember the top level folder here begins with a full-stop, so it will be invisible-by-default in your Finder or file system.
+    3. Save the file you copied as **`deploy.yml`** inside that `workflows` folder, giving the full path **`.github/workflows/deploy.yml`**.
+
+    > **What does this file do?** It tells GitHub: *"whenever someone pushes to the `main` branch, install dependencies (`npm ci`), run the build (`npm run build`), and deploy whatever ends up in the `dist` folder to GitHub Pages."*
+    ---
+  </script>
+  <script id="14" type="text/markdown">
+    ## Commit, push, and switch GitHub Pages over to GitHub Actions
+    1. Back in the Terminal, inside your project folder, `add`, `commit`, and `push` your changes:
     > ```
     > git add .
     > git commit -m "add deploy workflow"
     > git push
     > ```
-    - go to GitHub and open your project’s repository. Click the ‘Settings’ tab.
-    - click the ‘Pages’ item from side bar on the left.
-    - change ‘Build and deployment’ to ‘GitHub Actions’ (if it isn’t already set that way).
-    - you may see a failed deployment at this stage but don’t worry about it (yet). The next time you make a change to your project, the site will be built and deployed.
-    - or, if you click the ‘Actions’ tab, where you may see the failed deployment. Ignore it and click 'Deploy' on the left. You can now manually trigger a deployment by clicking the 'Run workflow' button on the right. This will build and deploy your site, and you can see the progress in the log.
-    - And, if you go to the GitHub repo -> Settings -> Pages again, you will see the URL for your project’s site, ready to be accessed publicly on the web. The URL will be of the form:<br>&nbsp;`https://<your-user-name>.github.io/<repo-name>`.
+    2. Go to GitHub and open your project's repository. Click the **Settings** tab.
+    3. Click the **Pages** item from the sidebar on the left.
+    4. Under **Build and deployment**, change the **Source** to **GitHub Actions** (if it isn't already set that way).
+    5. Click the **Actions** tab. You should see a workflow run in progress (triggered automatically by your `push`) — click it to watch its progress.
+
+    > **⚠️ First run may fail.** If the very first run failed *before* you switched the Pages source to GitHub Actions, don't worry — that's expected. Click **Deploy** on the left of the Actions tab, then click the **Run workflow** button on the right to trigger it manually. This time it should build and deploy successfully.
+
+    6. Once the workflow finishes with a green check mark, go back to your repo's **Settings → Pages**. You'll see the live URL for your site there, of the form:
+
+    `https://<YourUserName>.github.io/<RepoName>`
+
+    From now on, every time you `push` a change to `main`, GitHub Actions will automatically rebuild and redeploy your site — no manual `npm run build` required.
+
+    ---
   </script>
   <script id="51" type="module">
-    // Add copy buttons to all code blocks
-    {
-      const style = html`<style>
-        pre {
-          position: relative;
-        }
-        .copy-btn {
-          position: absolute;
-          top: 6px;
-          right: 6px;
-          padding: 3px 10px;
-          font-size: 12px;
-          cursor: pointer;
-          background: #f0f0f0;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          opacity: 0.7;
-          transition: opacity 0.2s;
-        }
-        .copy-btn:hover { opacity: 1; }
-        .copy-btn.copied {
-          background: #d4edda;
-          border-color: #28a745;
-          color: #28a745;
-        }
-      </style>`;
-      document.head.append(style);
-
-      function addCopyButtons() {
-        document.querySelectorAll("pre").forEach((pre) => {
-          if (pre.querySelector(".copy-btn")) return; // skip if already added
-          const btn = document.createElement("button");
-          btn.className = "copy-btn";
-          btn.textContent = "Copy";
-          btn.addEventListener("click", () => {
-            const code = pre.querySelector("code")?.innerText ?? pre.innerText;
-            navigator.clipboard.writeText(code).then(() => {
-              btn.textContent = "Copied!";
-              btn.classList.add("copied");
-              setTimeout(() => {
-                btn.textContent = "Copy";
-                btn.classList.remove("copied");
-              }, 2000);
-            });
-          });
-          pre.append(btn);
-        });
-      }
-
-      // Run once and also observe for dynamically rendered cells
-      addCopyButtons();
-      const observer = new MutationObserver(addCopyButtons);
-      observer.observe(document.body, {childList: true, subtree: true});
-      invalidation.then(() => observer.disconnect());
-    }
+    import {enableCopyButtons} from "./copy-buttons.js";
+    enableCopyButtons({invalidation});
   </script>
 </notebook>

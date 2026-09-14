@@ -11,7 +11,7 @@
   <script id="12" type="text/markdown">
     ## Clean up, and update your build script to output to `dist`
     1. If you previously followed the simple GitHub Pages setup and committed a `docs` folder to your repository, delete it now. The new workflow builds the site itself and doesn't need a checked-in output folder.
-    2. Open `package.json` in your plain text editor and change the `build` script so it outputs to **`../dist`** instead of **`../docs`**. The whole file should look like this (your dependency version may differ):
+    2. Open `package.json` in your plain text editor and change the `build` script so it outputs to **`../dist`** instead of **`../docs`**. The whole file should look like this:
     > ```json
     > {
     >   "dependencies": {
@@ -25,7 +25,7 @@
     > ```
     3. Save the file.
 
-    > **Why `dist` and not `docs`?** `dist` is a common convention for build output that gets *generated*, rather than hand-maintained and committed. Once GitHub Actions is building your site for you, there's no need to commit the built files at all — you'll add `/dist/` to your `.gitignore` (it's already there if you used the `.gitignore` from an earlier notebook).
+    > **Why `dist` and not `docs`?** `dist` is a common convention for build output that gets *generated*, rather than hand-maintained and committed. Once GitHub Actions is building your site for you, there's no need to commit the built files at all — you'll add `dist/` to your `.gitignore` (it's already there if you used the `.gitignore` from an earlier notebook).
     ---
   </script>
   <script id="13" type="text/markdown">

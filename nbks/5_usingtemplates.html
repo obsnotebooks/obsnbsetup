@@ -1,53 +1,101 @@
 <!doctype html>
-<notebook theme="cotton">
+<notebook theme="air">
   <title>Custom Templates</title>
   <script id="1" type="text/markdown">
-      # Templates
+      # *Setting up*<br>Custom Templates
+  </script>
+  <script id="4" type="text/markdown">
+    *unlike many other web site/app development frameworks, the Observable Notebook Kit gives you –* relatively *straightforwardly – complete control of page design from the `<html>` element down. This is done by allowing you to specify a template file which is able both to define your own design for a notebook-based site or to remove *all* the chrome if you are going for (gallery-ready) full screen presentation*
   </script>
   <script id="2" type="text/markdown">
-    13. Now open up your plain text editor (see above). Find and edit the file `package.json` (which has been created by the previous step) so that it looks like this (it’s the `scripts` part that needs adding):
-    ````json
-    {
-      "dependencies": {
-        "@observablehq/notebook-kit": "latest"
-      },
-      "scripts": {
-        "preview": "notebooks preview --root nbks",
-        "build": "notebooks build --root nbks --out ../docs -- *.html"
-      }
-    }
-    ````
-    10. This file refers to another, a template file, called `nochrome.tmpl` so now you also need to create this file inside your `docs` folder. Make a new plain text file using you editor and save it in the `docs` folder. **Make sure** the file name has that **`.tmpl`** extension. Its contents should look like this:
-    ````html
-    <!doctype html>
-    <html lang="en">
-      <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style type="text/css">
-          @import url("observable:styles/index.css");
-          * {
-            margin-top:0 !important;
-          }
-          html {
-            background-color: white;
-            margin:0;
-            padding:2vw; /* change this to 0 to override default */
-            border:0;
-          }
-          body {
-            max-width: none;
-            margin:0;
-            padding:0;
-            border:0;
-          }
-        </style>
-      </head>
-      <body>
-        <main></main>
-      </body>
-    </html>
-    ````
+    ## Create your template file
+    Using your plain text editor, make a new file. Copy and paste the following `html` file into it. Then `Save` it to your project’s `nbks` folder. Give the file the name `custom.tmpl`. (And, if you are, by this time, using an editor like Visual Studio Code, change its preferences to highlight any file with a `.tmpl` as `html`.)
+    > ```html
+    > <!doctype html>
+    > <html lang="en">
+    >   <head>
+    >     <meta charset="utf-8">
+    >     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    >     <style type="text/css">
+    >       @import url("observable:styles/index.css");
+    >       @import url("@fontsource-variable/inter/wght.css");
+    >       @import url("@fontsource-variable/inter/wght-italic.css");
+    >       @import url("@fontsource-variable/source-serif-4/wght.css");
+    >       @import url("@fontsource-variable/source-serif-4/wght-italic.css");
+    >       @import url("@fontsource-variable/spline-sans-mono/wght.css");
+    >       @import url("@fontsource-variable/spline-sans-mono/wght-italic.css");
+    >       /* force no margin even in the html tag */
+    >       * {
+    >         margin-top:0 !important;
+    >       }
+    >       /* change this for overall background color */
+    >       html {
+    >         background-color: white;
+    >         margin:0;
+    >         padding:2vw; /* change this to override template default */
+    >         border:0;
+    >       }
+    >       /* and also this for body properties */
+    >       body {
+    >         display: flex;
+    >         background-color: white;
+    >         max-width: none;
+    >         margin:0;
+    >         padding:0;
+    >         border:0;
+    >       }
+    >       /* add more custom styles here */
+    >     </style>
+    >   </head>
+    >   <body>
+    >     <main></main>
+    >   </body>
+    > </html>
+    > ```
+    This template:
+    - imports Observable’s default styles (which are very clean and useable)
+    - imports a number of fonts used by these styles which are also well-chosen
+    - removes *all* the ‘chrome’ (margins and padding) that are often added in by frameworks, including Observable, to top-level elements like `html` and `body`
+    - **and most importantly** leaves you to add `CSS` to customize any framing for the pages/notebooks of your site.
+  </script>
+  <script id="5" type="text/markdown">
+    ## Edit your `package.json` file to use your template
+    Now use your plain text editor to find and edit the `package.json` file in your project. Edit this file to match what you see below. You are adding reference to your template file so that it is used when you build your project.
+    > ```json
+    > {
+    >   "dependencies": {
+    >     "@observablehq/notebook-kit": "latest"
+    >   },
+    >   "scripts": {
+    >     "preview": "notebooks preview --root nbks --template nbks/custom.tmpl",
+    >     "build": "notebooks build --root nbks --template nbks/custom.tmpl --out ../dist -- *.html"
+    >   }
+    > }
+    > ```
+  </script>
+  <script id="8" type="text/markdown">
+    ## Test with `preview`
+    See how this changes the `build` by running:
+    > ```
+    > npm run preview
+    > ```
 
+    (and remembering to type `o` [letter o] when prompted)
+  </script>
+  <script id="9" type="text/markdown">
+    ## Finally, `commit` and `push` to GitHub
+    > ```
+    > git add .
+    > git commit -m "add template file"
+    > git push
+    > ```
+
+    And check out the results on your website!
+
+    ---
+  </script>
+  <script id="10" type="module">
+    import {enableCopyButtons} from "./copy-buttons.js";
+    enableCopyButtons({invalidation});
   </script>
 </notebook>

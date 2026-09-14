@@ -1,15 +1,15 @@
 <!doctype html>
 <notebook theme="air">
-  <title>More Advanced GitHub</title>
+  <title>More Advanced GitHub &amp; GitHub Pages</title>
   <script id="1" type="text/markdown">
     # *Setting up*<br>More Advanced<br>GitHub &amp; GitHub Pages
 
-    *the simple GitHub Pages setup works, but requires you to `build` and `push` a `docs` folder every time. Here we replace that with a* ***GitHub Actions workflow*** *that builds and deploys your site automatically on every `push`.*
+    *the simple GitHub Pages setup works, but requires you to `build` and `push` a `docs` folder every time. Here we replace that with a* ***GitHub Actions workflow*** *that builds and deploys your site automatically on every `push`*
 
     ---
   </script>
   <script id="12" type="text/markdown">
-    ## Clean up • update your build script to output to `dist`
+    ## Clean up, and update your build script to output to `dist`
     1. If you previously followed the simple GitHub Pages setup and committed a `docs` folder to your repository, delete it now. The new workflow builds the site itself and doesn't need a checked-in output folder.
     2. Open `package.json` in your plain text editor and change the `build` script so it outputs to **`../dist`** instead of **`../docs`**. The whole file should look like this (your dependency version may differ):
     > ```json
@@ -86,8 +86,9 @@
     > **⚠️ First run may fail.** If the very first run failed *before* you switched the Pages source to GitHub Actions, don't worry — that's expected. Click **Deploy** on the left of the Actions tab, then click the **Run workflow** button on the right to trigger it manually. This time it should build and deploy successfully.
 
     6. Once the workflow finishes with a green check mark, go back to your repo's **Settings → Pages**. You'll see the live URL for your site there, of the form:
-
-    `https://<YourUserName>.github.io/<RepoName>`
+    > ```
+    > https://<YourUserName>.github.io/<RepoName>
+    > ```
 
     From now on, every time you `push` a change to `main`, GitHub Actions will automatically rebuild and redeploy your site — no manual `npm run build` required.
 

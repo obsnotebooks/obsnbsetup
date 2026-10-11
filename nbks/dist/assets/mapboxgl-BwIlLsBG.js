@@ -1,0 +1,1 @@
+import e from"https://cdn.jsdelivr.net/npm/mapbox-gl/+esm";var t=document.createElement(`link`);t.href=`https://cdn.jsdelivr.net/npm/mapbox-gl/dist/mapbox-gl.css`,t.rel=`stylesheet`,document.head.appendChild(t);export{e as default};

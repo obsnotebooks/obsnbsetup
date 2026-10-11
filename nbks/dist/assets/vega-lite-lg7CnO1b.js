@@ -1,0 +1,1 @@
+import*as e from"https://cdn.jsdelivr.net/npm/vega/+esm";import*as t from"https://cdn.jsdelivr.net/npm/vega-lite/+esm";import*as n from"https://cdn.jsdelivr.net/npm/vega-lite-api/+esm";var r=n.register(e,t);export{r as vl};

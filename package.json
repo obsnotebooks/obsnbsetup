@@ -3,7 +3,7 @@
     "@observablehq/notebook-kit": "latest"
   },
   "scripts": {
-    "preview": "notebooks preview --root nbks --template nbks/custom.tmpl",
-    "build": "notebooks build --root nbks --template nbks/custom.tmpl --out ../dist -- nbks/*.html"
+    "preview": "notebooks preview --root nbks",
+    "build": "notebooks build --root nbks --out ../dist -- nbks/*.html"
   }
 }
